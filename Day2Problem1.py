@@ -1,3 +1,5 @@
+import re
+
 def main():
     with open("Day2Problem1Input.txt") as f:
         valid = 0
@@ -6,22 +8,15 @@ def main():
             startNum = split[0]
             endNum = split[1].replace(',', ' ')
             for num in range(int(startNum), int(endNum)+ 1):
-                valid += checkIfEqual(num)
+                valid += checkIfValid(num)
         print(valid)
-            
-def checkIfEqual(num):
-    numStr = str(num)
-    firstHalf, secondHalf = generateHalfNumber(str(num))
-    invalid = 0
-    if firstHalf == secondHalf:
-        invalid += num
 
-    return invalid
-        
-def generateHalfNumber(num):
-    whereToSplit = (int)(len(str(num))/2)
-    firstHalf = num[0:whereToSplit]
-    secondHalf = num[whereToSplit:len(str(num))]
-    return firstHalf,secondHalf
+def checkIfValid(num):
+    valid = re.match(r'^(\d+)\1$', str(num))
+    #print(num)
+    if valid:
+        return num
+    else:
+        return 0 
 
 main()
